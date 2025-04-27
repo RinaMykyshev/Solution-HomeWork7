@@ -1,15 +1,40 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
+        Series series = new Series();
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+        Season season1 = new Season();
+        season1.addEpisode(new Episode("S1E1: The Beginning", 1200));
+        season1.addEpisode(new Episode("S1E2: The Plot Thickens", 1250));
+
+        Season season2 = new Season();
+        season2.addEpisode(new Episode("S2E1: The Return", 1300));
+        season2.addEpisode(new Episode("S2E2: Finale", 1400));
+
+        series.addSeason(season1);
+        series.addSeason(season2);
+
+        System.out.println("Normal Iterator (Season 1):");
+        EpisodeIterator normalIt = season1.createIterator();
+        while (normalIt.hasNext()) {
+            System.out.println(normalIt.next());
+        }
+
+        System.out.println("\nReverse Iterator (Season 2):");
+        EpisodeIterator revIt = season2.createReverseIterator();
+        while (revIt.hasNext()) {
+            System.out.println(revIt.next());
+        }
+
+        System.out.println("\nShuffle Iterator (Season 1, seed=42):");
+        EpisodeIterator shuffleIt = season1.createShuffleIterator(42);
+        while (shuffleIt.hasNext()) {
+            System.out.println(shuffleIt.next());
+        }
+
+        System.out.println("\nBinge Iterator (Entire Series):");
+        EpisodeIterator bingeIt = series.createBingeIterator();
+        while (bingeIt.hasNext()) {
+            System.out.println(bingeIt.next());
         }
     }
 }
